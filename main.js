@@ -92,15 +92,7 @@ function nuevaDivision() {
 }
 
 function enviar() {
-  if (respuesta_usuario.value.trim() === "") {
-    return;
-  }
-
-  let respuestaUsuario = respuesta_usuario.value.trim();
-  let respuestaNumerica = parseFloat(respuestaUsuario);
-
-  if (isNaN(respuestaNumerica)) {
-    // Si la respuesta no es un número válido
+  if (respuesta_usuario.value === "") {
     return;
   }
 
@@ -110,16 +102,18 @@ function enviar() {
 
   let i = document.createElement("i");
 
-  // Verificar si la respuesta numérica coincide con la solución o su equivalente negativo para restas
-  if (respuestaNumerica === solucion || (operacion_actual === "-" && respuestaNumerica === -solucion)) {
-    i.className = "fa-regular fa-face-grin";
+  // Convertir respuesta a número, permitiendo negativos y decimales
+  let respuestaNumerica = parseFloat(respuesta_usuario.value);
+
+  if (!isNaN(respuestaNumerica) && respuestaNumerica === solucion) {
+    i.className = "far fa-face-grin";
     mjs_correccion.innerHTML = "";
     mjs_correccion.appendChild(i);
 
     // Cambiar automáticamente el problema
     cambiarProblema();
   } else {
-    i.className = "fa-regular fa-face-frown";
+    i.className = "far fa-face-frown";
     mjs_correccion.innerHTML = "";
     mjs_correccion.appendChild(i);
   }
@@ -155,7 +149,7 @@ function backspaceInput() {
 
 respuesta_usuario.onkeydown = function (e) {
   var ev = document.all ? window.event : e;
-  if (ev.keyCode == 13) {
+  if (ev.keyCode === 13) {
     enviar();
   }
 }
