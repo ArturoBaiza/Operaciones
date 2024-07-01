@@ -149,6 +149,24 @@ i {
   }
 }
 
+.volver-al-menu {
+    position: absolute;
+    left: 20px; /* Ajusta la distancia del borde izquierdo */
+    top: 20px; /* Ajusta la distancia del borde superior */
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #000;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none; /* Quitar subrayado del enlace */
+}
+
+.volver-al-menu:hover {
+    transform: scale(1.1);
+}
+
 @media only screen and (max-width: 600px) {
   .container-operadores {
     flex-direction: column;
