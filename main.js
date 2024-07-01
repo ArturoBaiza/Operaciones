@@ -1,5 +1,7 @@
 let n1, n2;
 let operacion_actual = "";
+let correctas = 0;
+let incorrectas = 0;
 
 function btnSumar() {
   mjs_correccion.innerHTML = "";
@@ -92,7 +94,7 @@ function nuevaDivision() {
 }
 
 function enviar() {
-  if (respuesta_usuario.value === "") {
+  if (respuesta_usuario.value == "") {
     return;
   }
 
@@ -102,20 +104,20 @@ function enviar() {
 
   let i = document.createElement("i");
 
-  // Convertir respuesta a número, permitiendo negativos y decimales
-  let respuestaNumerica = parseFloat(respuesta_usuario.value);
-
-  if (!isNaN(respuestaNumerica) && respuestaNumerica === solucion) {
-    i.className = "far fa-face-grin";
-    mjs_correccion.innerHTML = "";
+  if (parseFloat(respuesta_usuario.value) === solucion) {
+    i.className = "fa-regular fa-face-grin";
     mjs_correccion.appendChild(i);
 
+    correctas++;
+    document.getElementById("caritas_correctas").textContent = "Correctas: " + correctas;
     // Cambiar automáticamente el problema
     cambiarProblema();
   } else {
-    i.className = "far fa-face-frown";
-    mjs_correccion.innerHTML = "";
+    i.className = "fa-regular fa-face-frown";
     mjs_correccion.appendChild(i);
+
+    incorrectas++;
+    document.getElementById("caritas_incorrectas").textContent = "Incorrectas: " + incorrectas;
   }
 
   respuesta_usuario.value = "";
@@ -124,13 +126,13 @@ function enviar() {
 function cambiarProblema() {
   respuesta_usuario.value = "";
 
-  if (operacion_actual === "+") {
+  if (operacion_actual == "+") {
     nuevaSuma();
-  } else if (operacion_actual === "-") {
+  } else if (operacion_actual == "-") {
     nuevaResta();
-  } else if (operacion_actual === "*") {
+  } else if (operacion_actual == "*") {
     nuevoProducto();
-  } else if (operacion_actual === "/") {
+  } else if (operacion_actual == "/") {
     nuevaDivision();
   }
 }
@@ -149,7 +151,7 @@ function backspaceInput() {
 
 respuesta_usuario.onkeydown = function (e) {
   var ev = document.all ? window.event : e;
-  if (ev.keyCode === 13) {
+  if (ev.keyCode == 13) {
     enviar();
   }
 }
