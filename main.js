@@ -1,7 +1,5 @@
 let n1, n2;
 let operacion_actual = "";
-let correctas = 0;
-let incorrectas = 0;
 
 function btnSumar() {
   mjs_correccion.innerHTML = "";
@@ -104,22 +102,24 @@ function enviar() {
 
   let i = document.createElement("i");
 
-  if (parseFloat(respuesta_usuario.value) === solucion) {
-    i.className = "fa-regular fa-face-grin";
-    mjs_correccion.appendChild(i);
-
-    correctas++;
-    document.getElementById("caritas_correctas").textContent = "Correctas: " + correctas;
-    // Cambiar automáticamente el problema
-    cambiarProblema();
+  // Revisar si la respuesta es numérica o contiene el signo negativo o punto
+  let respuestaUsuario = respuesta_usuario.value.trim();
+  if (!isNaN(respuestaUsuario) || respuestaUsuario === '-' || respuestaUsuario === '.') {
+    if (parseFloat(respuestaUsuario) === solucion) {
+      i.className = "fa-regular fa-face-grin";
+      mjs_correccion.appendChild(i);
+    } else {
+      i.className = "fa-regular fa-face-frown";
+      mjs_correccion.appendChild(i);
+    }
   } else {
+    // Respuesta no válida
     i.className = "fa-regular fa-face-frown";
     mjs_correccion.appendChild(i);
-
-    incorrectas++;
-    document.getElementById("caritas_incorrectas").textContent = "Incorrectas: " + incorrectas;
   }
 
+  // Cambiar automáticamente el problema
+  cambiarProblema();
   respuesta_usuario.value = "";
 }
 
