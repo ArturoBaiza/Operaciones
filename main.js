@@ -92,7 +92,15 @@ function nuevaDivision() {
 }
 
 function enviar() {
-  if (respuesta_usuario.value == "") {
+  if (respuesta_usuario.value.trim() === "") {
+    return;
+  }
+
+  let respuestaUsuario = respuesta_usuario.value.trim();
+  let respuestaNumerica = parseFloat(respuestaUsuario);
+
+  if (isNaN(respuestaNumerica)) {
+    // Si la respuesta no es un número válido
     return;
   }
 
@@ -102,14 +110,17 @@ function enviar() {
 
   let i = document.createElement("i");
 
-  if (parseInt(respuesta_usuario.value) === solucion) {
+  // Verificar si la respuesta numérica coincide con la solución o su equivalente negativo para restas
+  if (respuestaNumerica === solucion || (operacion_actual === "-" && respuestaNumerica === -solucion)) {
     i.className = "fa-regular fa-face-grin";
+    mjs_correccion.innerHTML = "";
     mjs_correccion.appendChild(i);
 
     // Cambiar automáticamente el problema
     cambiarProblema();
   } else {
     i.className = "fa-regular fa-face-frown";
+    mjs_correccion.innerHTML = "";
     mjs_correccion.appendChild(i);
   }
 
@@ -119,13 +130,13 @@ function enviar() {
 function cambiarProblema() {
   respuesta_usuario.value = "";
 
-  if (operacion_actual == "+") {
+  if (operacion_actual === "+") {
     nuevaSuma();
-  } else if (operacion_actual == "-") {
+  } else if (operacion_actual === "-") {
     nuevaResta();
-  } else if (operacion_actual == "*") {
+  } else if (operacion_actual === "*") {
     nuevoProducto();
-  } else if (operacion_actual == "/") {
+  } else if (operacion_actual === "/") {
     nuevaDivision();
   }
 }
