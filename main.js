@@ -211,25 +211,16 @@ function completarSeccion(tipo) {
   mensaje.textContent = `Completaste la sección de ${tipo}.`;
   mjs_correccion.appendChild(mensaje);
 
-  // Bloquear generación de más problemas para este tipo de operación
+  // Desactivar solo la generación de más problemas para este tipo de operación
   if (tipo === "suma") {
     problemasSuma = 5;
-    bloquearOperacion("suma");
   } else if (tipo === "resta") {
     problemasResta = 5;
-    bloquearOperacion("resta");
   } else if (tipo === "producto") {
     problemasProducto = 5;
-    bloquearOperacion("producto");
   } else if (tipo === "division") {
     problemasDivision = 5;
-    bloquearOperacion("division");
   }
-}
-
-function bloquearOperacion(idBoton) {
-  // Desactivar el botón de acuerdo al tipo de operación
-  document.getElementById(idBoton).disabled = true;
 }
 
 function mostrarResultadosFinales() {
