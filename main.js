@@ -21,7 +21,7 @@ function btnSumar() {
     problemasSuma++;
 
     if (problemasSuma === 5) {
-      bloquearOperacion("suma");
+      completarSeccion("suma");
     }
   }
 }
@@ -48,7 +48,7 @@ function btnProducto() {
     problemasProducto++;
 
     if (problemasProducto === 5) {
-      bloquearOperacion("producto");
+      completarSeccion("producto");
     }
   }
 }
@@ -75,7 +75,7 @@ function btnResta() {
     problemasResta++;
 
     if (problemasResta === 5) {
-      bloquearOperacion("resta");
+      completarSeccion("resta");
     }
   }
 }
@@ -109,7 +109,7 @@ function btnDivision() {
     problemasDivision++;
 
     if (problemasDivision === 5) {
-      bloquearOperacion("division");
+      completarSeccion("division");
     }
   }
 }
@@ -204,6 +204,27 @@ function activarBoton(idBoton) {
 
   // Agregar la clase 'activado' solo al botón seleccionado
   document.getElementById(idBoton).classList.add("activado");
+}
+
+function completarSeccion(tipo) {
+  let mensaje = document.createElement("p");
+  mensaje.textContent = `Completaste la sección de ${tipo}.`;
+  mjs_correccion.appendChild(mensaje);
+
+  // Bloquear generación de más problemas para este tipo de operación
+  if (tipo === "suma") {
+    problemasSuma = 5;
+    bloquearOperacion("suma");
+  } else if (tipo === "resta") {
+    problemasResta = 5;
+    bloquearOperacion("resta");
+  } else if (tipo === "producto") {
+    problemasProducto = 5;
+    bloquearOperacion("producto");
+  } else if (tipo === "division") {
+    problemasDivision = 5;
+    bloquearOperacion("division");
+  }
 }
 
 function bloquearOperacion(idBoton) {
