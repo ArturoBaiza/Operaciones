@@ -28,72 +28,51 @@ let problemasDivision = [
   { num1: 36, num2: 6, respuesta: 6 },
   { num1: 63, num2: 7, respuesta: 9 }
 ];
-let indiceProblemaActual = -1; // Índice del problema actual
+let problemasMostrados = []; // Array para almacenar los problemas mostrados
 let correctasSuma = 0;
 let correctasResta = 0;
 let correctasProducto = 0;
 let correctasDivision = 0;
 
 function btnSumar() {
-  if (problemasSuma.length > 0) {
-    mjs_correccion.innerHTML = "";
-    activarBoton("suma");
-    operacion_actual = "+";
-
-    operacion.innerHTML = " + ";
-
-    mostrarNuevoProblema(problemasSuma);
-  }
+  mostrarProblemaAleatorio(problemasSuma);
 }
 
 function btnResta() {
-  if (problemasResta.length > 0) {
-    mjs_correccion.innerHTML = "";
-    activarBoton("resta");
-    operacion_actual = "-";
-
-    operacion.innerHTML = " - ";
-
-    mostrarNuevoProblema(problemasResta);
-  }
+  mostrarProblemaAleatorio(problemasResta);
 }
 
 function btnProducto() {
-  if (problemasProducto.length > 0) {
-    mjs_correccion.innerHTML = "";
-    activarBoton("producto");
-    operacion_actual = "*";
-
-    operacion.innerHTML = " x ";
-
-    mostrarNuevoProblema(problemasProducto);
-  }
+  mostrarProblemaAleatorio(problemasProducto);
 }
 
 function btnDivision() {
-  if (problemasDivision.length > 0) {
-    mjs_correccion.innerHTML = "";
-    activarBoton("division");
-    operacion_actual = "/";
-
-    operacion.innerHTML = " / ";
-
-    mostrarNuevoProblema(problemasDivision);
-  }
+  mostrarProblemaAleatorio(problemasDivision);
 }
 
-function mostrarNuevoProblema(arrayProblemas) {
-  // Seleccionar aleatoriamente un problema del array
-  indiceProblemaActual = Math.floor(Math.random() * arrayProblemas.length);
+function mostrarProblemaAleatorio(arrayProblemas) {
+  if (arrayProblemas.length > 0) {
+    // Elegir un índice aleatorio dentro del rango de problemas disponibles
+    let indice = Math.floor(Math.random() * arrayProblemas.length);
 
-  let problemaActual = arrayProblemas[indiceProblemaActual];
-  n1 = problemaActual.num1;
-  n2 = problemaActual.num2;
+    // Obtener el problema aleatorio
+    let problema = arrayProblemas[indice];
+    n1 = problema.num1;
+    n2 = problema.num2;
 
-  num1.innerHTML = n1;
-  num2.innerHTML = n2;
+    // Mostrar el problema en la interfaz
+    num1.innerHTML = n1;
+    num2.innerHTML = n2;
 
-  respuesta_usuario.focus();
+    // Guardar el problema mostrado en el array correspondiente
+    problemasMostrados.push({ operacion: operacion_actual, problema: problema });
+
+    // Eliminar el problema del array original para no repetirlo
+    arrayProblemas.splice(indice, 1);
+
+    // Enfocar el input de respuesta
+    respuesta_usuario.focus();
+  }
 }
 
 function enviar() {
@@ -104,51 +83,32 @@ function enviar() {
   let solucion = parseInt(respuesta_usuario.value.trim());
   let problemaActual;
 
-  switch (operacion_actual) {
-    case "+":
-      problemaActual = problemasSuma[indiceProblemaActual];
-      if (solucion === problemaActual.respuesta) {
-        correctasSuma++;
-      }
+  // Buscar el problema actual en el array de problemas mostrados
+  for (let i = 0; i < problemasMostrados.length; i++) {
+    if (problemasMostrados[i].operacion === operacion_actual) {
+      problemaActual = problemasMostrados[i].problema;
       break;
-    case "-":
-      problemaActual = problemasResta[indiceProblemaActual];
-      if (solucion === problemaActual.respuesta) {
-        correctasResta++;
-      }
-      break;
-    case "*":
-      problemaActual = problemasProducto[indiceProblemaActual];
-      if (solucion === problemaActual.respuesta) {
-        correctasProducto++;
-      }
-      break;
-    case "/":
-      problemaActual = problemasDivision[indiceProblemaActual];
-      if (solucion === problemaActual.respuesta) {
-        correctasDivision++;
-      }
-      break;
-    default:
-      break;
+    }
   }
 
-  // Eliminar el problema resuelto del array correspondiente
-  switch (operacion_actual) {
-    case "+":
-      problemasSuma.splice(indiceProblemaActual, 1);
-      break;
-    case "-":
-      problemasResta.splice(indiceProblemaActual, 1);
-      break;
-    case "*":
-      problemasProducto.splice(indiceProblemaActual, 1);
-      break;
-    case "/":
-      problemasDivision.splice(indiceProblemaActual, 1);
-      break;
-    default:
-      break;
+  // Verificar si la respuesta es correcta y actualizar el contador correspondiente
+  if (solucion === problemaActual.respuesta) {
+    switch (operacion_actual) {
+      case "+":
+        correctasSuma++;
+        break;
+      case "-":
+        correctasResta++;
+        break;
+      case "*":
+        correctasProducto++;
+        break;
+      case "/":
+        correctasDivision++;
+        break;
+      default:
+        break;
+    }
   }
 
   // Verificar si se han completado todas las operaciones
@@ -163,26 +123,19 @@ function enviar() {
 function cambiarProblema() {
   respuesta_usuario.value = "";
 
+  // Mostrar un nuevo problema aleatorio del tipo de operación actual
   switch (operacion_actual) {
     case "+":
-      if (problemasSuma.length > 0) {
-        mostrarNuevoProblema(problemasSuma);
-      }
+      mostrarProblemaAleatorio(problemasSuma);
       break;
     case "-":
-      if (problemasResta.length > 0) {
-        mostrarNuevoProblema(problemasResta);
-      }
+      mostrarProblemaAleatorio(problemasResta);
       break;
     case "*":
-      if (problemasProducto.length > 0) {
-        mostrarNuevoProblema(problemasProducto);
-      }
+      mostrarProblemaAleatorio(problemasProducto);
       break;
     case "/":
-      if (problemasDivision.length > 0) {
-        mostrarNuevoProblema(problemasDivision);
-      }
+      mostrarProblemaAleatorio(problemasDivision);
       break;
     default:
       break;
@@ -214,4 +167,22 @@ function activarBoton(idBoton) {
 
   // Agregar la clase 'activado' al botón actual
   document.getElementById(idBoton).classList.add("activado");
+
+  // Establecer la operación actual según el botón seleccionado
+  switch (idBoton) {
+    case "suma":
+      operacion_actual = "+";
+      break;
+    case "resta":
+      operacion_actual = "-";
+      break;
+    case "producto":
+      operacion_actual = "*";
+      break;
+    case "division":
+      operacion_actual = "/";
+      break;
+    default:
+      break;
+  }
 }
