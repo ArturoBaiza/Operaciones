@@ -1,17 +1,68 @@
 let n1, n2;
 let operacion_actual = "";
+let tiempoMaximo = 120; // 2 minutos en segundos
+let tiempoRestanteSuma = tiempoMaximo;
+let tiempoRestanteResta = tiempoMaximo;
+let tiempoRestanteProducto = tiempoMaximo;
+let tiempoRestanteDivision = tiempoMaximo;
+let contadorSuma, contadorResta, contadorProducto, contadorDivision;
+
+function iniciarContadores() {
+  contadorSuma = setInterval(function() {
+    tiempoRestanteSuma--;
+    actualizarTiempoRestante("suma", tiempoRestanteSuma);
+    if (tiempoRestanteSuma <= 0) {
+      clearInterval(contadorSuma);
+    }
+  }, 1000);
+
+  contadorResta = setInterval(function() {
+    tiempoRestanteResta--;
+    actualizarTiempoRestante("resta", tiempoRestanteResta);
+    if (tiempoRestanteResta <= 0) {
+      clearInterval(contadorResta);
+    }
+  }, 1000);
+
+  contadorProducto = setInterval(function() {
+    tiempoRestanteProducto--;
+    actualizarTiempoRestante("producto", tiempoRestanteProducto);
+    if (tiempoRestanteProducto <= 0) {
+      clearInterval(contadorProducto);
+    }
+  }, 1000);
+
+  contadorDivision = setInterval(function() {
+    tiempoRestanteDivision--;
+    actualizarTiempoRestante("division", tiempoRestanteDivision);
+    if (tiempoRestanteDivision <= 0) {
+      clearInterval(contadorDivision);
+    }
+  }, 1000);
+}
+
+function actualizarTiempoRestante(tipoOperacion, tiempoRestante) {
+  // Aquí podrías actualizar algún elemento HTML para mostrar el tiempo restante si es necesario
+  // Por ejemplo:
+  // document.getElementById(`tiempo-${tipoOperacion}`).innerHTML = tiempoRestante;
+}
 
 function btnSumar() {
   mjs_correccion.innerHTML = "";
   activarBoton("suma");
   operacion_actual = "+";
-
   operacion.innerHTML = " + ";
+  
+  if (tiempoRestanteSuma === tiempoMaximo) {
+    iniciarContadores();
+  }
 
   nuevaSuma();
 }
 
 function nuevaSuma() {
+  tiempoRestanteSuma = tiempoMaximo;
+
   n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
   n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
 
@@ -25,13 +76,18 @@ function btnProducto() {
   mjs_correccion.innerHTML = "";
   activarBoton("producto");
   operacion_actual = "*";
-
   operacion.innerHTML = " x ";
+  
+  if (tiempoRestanteProducto === tiempoMaximo) {
+    iniciarContadores();
+  }
 
   nuevoProducto();
 }
 
 function nuevoProducto() {
+  tiempoRestanteProducto = tiempoMaximo;
+
   n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
   n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
 
@@ -45,13 +101,18 @@ function btnResta() {
   mjs_correccion.innerHTML = "";
   activarBoton("resta");
   operacion_actual = "-";
-
   operacion.innerHTML = " - ";
+  
+  if (tiempoRestanteResta === tiempoMaximo) {
+    iniciarContadores();
+  }
 
   nuevaResta();
 }
 
 function nuevaResta() {
+  tiempoRestanteResta = tiempoMaximo;
+
   n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
   n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
 
@@ -65,13 +126,17 @@ function btnDivision() {
   mjs_correccion.innerHTML = "";
   activarBoton("division");
   operacion_actual = "/";
-
   operacion.innerHTML = " / ";
+  
+  if (tiempoRestanteDivision === tiempoMaximo) {
+    iniciarContadores();
+  }
 
   nuevaDivision();
 }
 
 function nuevaDivision() {
+  tiempoRestanteDivision = tiempoMaximo;
   let divisores = [];
 
   n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
