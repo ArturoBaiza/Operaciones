@@ -64,6 +64,24 @@ function mostrarProblemaAleatorio(arrayProblemas) {
     num1.innerHTML = n1;
     num2.innerHTML = n2;
 
+    // Mostrar el signo de la operación actual
+    switch (operacion_actual) {
+      case "+":
+        operacion.innerHTML = " + ";
+        break;
+      case "-":
+        operacion.innerHTML = " - ";
+        break;
+      case "*":
+        operacion.innerHTML = " x ";
+        break;
+      case "/":
+        operacion.innerHTML = " / ";
+        break;
+      default:
+        break;
+    }
+
     // Guardar el problema mostrado en el array correspondiente
     problemasMostrados.push({ operacion: operacion_actual, problema: problema });
 
@@ -181,6 +199,24 @@ function activarBoton(idBoton) {
       break;
     case "division":
       operacion_actual = "/";
+      break;
+    default:
+      break;
+  }
+
+  // Mostrar el signo de la operación actual
+  switch (operacion_actual) {
+    case "+":
+      operacion.innerHTML = " + ";
+      break;
+    case "-":
+      operacion.innerHTML = " - ";
+      break;
+    case "*":
+      operacion.innerHTML = " x ";
+      break;
+    case "/":
+      operacion.innerHTML = " / ";
       break;
     default:
       break;
