@@ -42,9 +42,8 @@ function iniciarContadores() {
 }
 
 function actualizarTiempoRestante(tipoOperacion, tiempoRestante) {
-  // Aquí podrías actualizar algún elemento HTML para mostrar el tiempo restante si es necesario
-  // Por ejemplo:
-  // document.getElementById(`tiempo-${tipoOperacion}`).innerHTML = tiempoRestante;
+  // Actualizar el elemento HTML correspondiente
+  document.getElementById(`t.restante-${tipoOperacion}`).innerHTML = `Tiempo: ${tiempoRestante} segundos`;
 }
 
 function btnSumar() {
@@ -227,4 +226,9 @@ function activarBoton(idBoton) {
   document.getElementById("producto").className = "";
   document.getElementById("division").className = "";
   document.getElementById(idBoton).className = "activado";
+}
+
+// Llamar a la función para iniciar los contadores al cargar la página
+window.onload = function() {
+  iniciarContadores();
 }
