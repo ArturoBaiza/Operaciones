@@ -222,3 +222,19 @@ function activarBoton(idBoton) {
       break;
   }
 }
+
+// Función para agregar números y operadores al input de respuesta
+function addNumToInput(num) {
+    document.getElementById("respuesta_usuario").value += num;
+}
+
+// Función para limpiar el input de respuesta
+function clearInput() {
+    document.getElementById("respuesta_usuario").value = "";
+}
+
+// Función para eliminar el último carácter del input de respuesta
+function backspaceInput() {
+    let input = document.getElementById("respuesta_usuario");
+    input.value = input.value.slice(0, -1);
+}
