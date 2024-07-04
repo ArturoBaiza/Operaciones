@@ -19,6 +19,10 @@ function btnSumar() {
 
     nuevaSuma();
     problemasSuma++;
+
+    if (problemasSuma === 5) {
+      bloquearOperacion("suma");
+    }
   }
 }
 
@@ -42,6 +46,10 @@ function btnProducto() {
 
     nuevoProducto();
     problemasProducto++;
+
+    if (problemasProducto === 5) {
+      bloquearOperacion("producto");
+    }
   }
 }
 
@@ -65,6 +73,10 @@ function btnResta() {
 
     nuevaResta();
     problemasResta++;
+
+    if (problemasResta === 5) {
+      bloquearOperacion("resta");
+    }
   }
 }
 
@@ -95,6 +107,10 @@ function btnDivision() {
 
     nuevaDivision();
     problemasDivision++;
+
+    if (problemasDivision === 5) {
+      bloquearOperacion("division");
+    }
   }
 }
 
@@ -188,6 +204,11 @@ function activarBoton(idBoton) {
 
   // Agregar la clase 'activado' solo al botón seleccionado
   document.getElementById(idBoton).classList.add("activado");
+}
+
+function bloquearOperacion(idBoton) {
+  // Desactivar el botón de acuerdo al tipo de operación
+  document.getElementById(idBoton).disabled = true;
 }
 
 function mostrarResultadosFinales() {
