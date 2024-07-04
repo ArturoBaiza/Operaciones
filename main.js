@@ -1,40 +1,165 @@
-// Mostrar resultados finales y ocultar el contenido relacionado con los problemas
-function mostrarResultadosFinales() {
-  // Ocultar todo el contenido relacionado con los problemas
-  document.getElementById("contenedor-problemas").style.display = "none";
+let n1, n2;
+let operacion_actual = "";
 
-  // Mostrar resultados finales
-  let resultadosFinales = document.createElement("div");
-  resultadosFinales.innerHTML = `
-    <h2>Resultados Finales</h2>
-    <p>Suma: ${correctasSuma}</p>
-    <p>Resta: ${correctasResta}</p>
-    <p>Multiplicación: ${correctasProducto}</p>
-    <p>División: ${correctasDivision}</p>
-  `;
-  document.body.appendChild(resultadosFinales);
+function btnSumar() {
+  mjs_correccion.innerHTML = "";
+  activarBoton("suma");
+  operacion_actual = "+";
+
+  operacion.innerHTML = " + ";
+
+  nuevaSuma();
 }
 
-// Función para agregar números y operadores al input de respuesta
-function addNumToInput(num) {
-  document.getElementById("respuesta_usuario").value += num;
+function nuevaSuma() {
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+
+  respuesta_usuario.focus();
 }
 
-// Función para limpiar el input de respuesta
-function clearInput() {
-  document.getElementById("respuesta_usuario").value = "";
+function btnProducto() {
+  mjs_correccion.innerHTML = "";
+  activarBoton("producto");
+  operacion_actual = "*";
+
+  operacion.innerHTML = " x ";
+
+  nuevoProducto();
 }
 
-// Función para eliminar el último carácter del input de respuesta
-function backspaceInput() {
-  let input = document.getElementById("respuesta_usuario");
-  input.value = input.value.slice(0, -1);
+function nuevoProducto() {
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+
+  respuesta_usuario.focus();
 }
 
-// Escuchar el evento de teclado para enviar la respuesta al presionar Enter
-document.getElementById("respuesta_usuario").onkeydown = function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault(); // Evitar el comportamiento por defecto del Enter (submit)
-    enviar(); // Llamar a la función enviar() cuando se presione Enter
+function btnResta() {
+  mjs_correccion.innerHTML = "";
+  activarBoton("resta");
+  operacion_actual = "-";
+
+  operacion.innerHTML = " - ";
+
+  nuevaResta();
+}
+
+function nuevaResta() {
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+
+  respuesta_usuario.focus();
+}
+
+function btnDivision() {
+  mjs_correccion.innerHTML = "";
+  activarBoton("division");
+  operacion_actual = "/";
+
+  operacion.innerHTML = " / ";
+
+  nuevaDivision();
+}
+
+function nuevaDivision() {
+  let divisores = [];
+
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+
+  for (let i = 1; i <= n1; i++) {
+    if (n1 % i === 0) {
+      divisores.push(i);
+    }
   }
-};
+
+  let pos = parseInt(Math.random() * divisores.length);
+  n2 = divisores[pos];
+
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+
+  respuesta_usuario.focus();
+}
+
+function enviar() {
+  if (respuesta_usuario.value == "") {
+    return;
+  }
+
+  let solucion;
+  let operacionStr = n1 + operacion_actual + n2;
+  solucion = eval(operacionStr);
+
+  let i = document.createElement("i");
+
+  // Revisar si la respuesta es numérica o contiene el signo negativo o punto
+  let respuestaUsuario = respuesta_usuario.value.trim();
+  if (!isNaN(respuestaUsuario) || respuestaUsuario === '-' || respuestaUsuario === '.') {
+    if (parseFloat(respuestaUsuario) === solucion) {
+      i.className = "fa-regular fa-face-grin";
+      mjs_correccion.appendChild(i);
+    } else {
+      i.className = "fa-regular fa-face-frown";
+      mjs_correccion.appendChild(i);
+    }
+  } else {
+    // Respuesta no válida
+    i.className = "fa-regular fa-face-frown";
+    mjs_correccion.appendChild(i);
+  }
+
+  // Cambiar automáticamente el problema
+  cambiarProblema();
+  respuesta_usuario.value = "";
+}
+
+function cambiarProblema() {
+  respuesta_usuario.value = "";
+
+  if (operacion_actual == "+") {
+    nuevaSuma();
+  } else if (operacion_actual == "-") {
+    nuevaResta();
+  } else if (operacion_actual == "*") {
+    nuevoProducto();
+  } else if (operacion_actual == "/") {
+    nuevaDivision();
+  }
+}
+
+function addNumToInput(num) {
+  respuesta_usuario.value += num;
+}
+
+function clearInput() {
+  respuesta_usuario.value = "";
+}
+
+function backspaceInput() {
+  respuesta_usuario.value = respuesta_usuario.value.slice(0, -1);
+}
+
+respuesta_usuario.onkeydown = function (e) {
+  var ev = document.all ? window.event : e;
+  if (ev.keyCode == 13) {
+    enviar();
+  }
+}
+
+function activarBoton(idBoton) {
+  document.getElementById("suma").className = "";
+  document.getElementById("resta").className = "";
+  document.getElementById("producto").className = "";
+  document.getElementById("division").className = "";
+  document.getElementById(idBoton).className = "activado";
+}
