@@ -30,7 +30,7 @@
             </button>
         </section>
 
-        <section class="container-operacion">
+        <section class="container-operacion" id="suma-section">
             <span id="num1"></span>
             <span id="operacion"></span>
             <span id="num2"></span>
@@ -54,19 +54,93 @@
             </div>
             <button id="corregir" onclick="enviar()">Enviar</button>
             <button id="cambiar" onclick="cambiarProblema()">Cambiar</button>
+            <span id="t.restante-suma">Tiempo: 120 segundos</span>
+        </section>
+
+        <section class="container-operacion" id="resta-section">
+            <span id="num1"></span>
+            <span id="operacion"></span>
+            <span id="num2"></span>
+            <span> = </span>
+            <input type="text" id="respuesta_usuario">
+            <div id="teclado">
+                <button onclick="addNumToInput(1)">1</button>
+                <button onclick="addNumToInput(2)">2</button>
+                <button onclick="addNumToInput(3)">3</button>
+                <button onclick="addNumToInput(4)">4</button>
+                <button onclick="addNumToInput(5)">5</button>
+                <button onclick="addNumToInput(6)">6</button>
+                <button onclick="addNumToInput(7)">7</button>
+                <button onclick="addNumToInput(8)">8</button>
+                <button onclick="addNumToInput(9)">9</button>
+                <button onclick="addNumToInput(0)">0</button>
+                <button onclick="addNumToInput('-')">-</button>
+                <button onclick="addNumToInput('.')">.</button>
+                <button onclick="clearInput()">Limpiar</button>
+                <button onclick="backspaceInput()">Borrar</button>
+            </div>
+            <button id="corregir" onclick="enviar()">Enviar</button>
+            <button id="cambiar" onclick="cambiarProblema()">Cambiar</button>
+            <span id="t.restante-resta">Tiempo: 120 segundos</span>
+        </section>
+
+        <section class="container-operacion" id="producto-section">
+            <span id="num1"></span>
+            <span id="operacion"></span>
+            <span id="num2"></span>
+            <span> = </span>
+            <input type="text" id="respuesta_usuario">
+            <div id="teclado">
+                <button onclick="addNumToInput(1)">1</button>
+                <button onclick="addNumToInput(2)">2</button>
+                <button onclick="addNumToInput(3)">3</button>
+                <button onclick="addNumToInput(4)">4</button>
+                <button onclick="addNumToInput(5)">5</button>
+                <button onclick="addNumToInput(6)">6</button>
+                <button onclick="addNumToInput(7)">7</button>
+                <button onclick="addNumToInput(8)">8</button>
+                <button onclick="addNumToInput(9)">9</button>
+                <button onclick="addNumToInput(0)">0</button>
+                <button onclick="addNumToInput('-')">-</button>
+                <button onclick="addNumToInput('.')">.</button>
+                <button onclick="clearInput()">Limpiar</button>
+                <button onclick="backspaceInput()">Borrar</button>
+            </div>
+            <button id="corregir" onclick="enviar()">Enviar</button>
+            <button id="cambiar" onclick="cambiarProblema()">Cambiar</button>
+            <span id="t.restante-producto">Tiempo: 120 segundos</span>
+        </section>
+
+        <section class="container-operacion" id="division-section">
+            <span id="num1"></span>
+            <span id="operacion"></span>
+            <span id="num2"></span>
+            <span> = </span>
+            <input type="text" id="respuesta_usuario">
+            <div id="teclado">
+                <button onclick="addNumToInput(1)">1</button>
+                <button onclick="addNumToInput(2)">2</button>
+                <button onclick="addNumToInput(3)">3</button>
+                <button onclick="addNumToInput(4)">4</button>
+                <button onclick="addNumToInput(5)">5</button>
+                <button onclick="addNumToInput(6)">6</button>
+                <button onclick="addNumToInput(7)">7</button>
+                <button onclick="addNumToInput(8)">8</button>
+                <button onclick="addNumToInput(9)">9</button>
+                <button onclick="addNumToInput(0)">0</button>
+                <button onclick="addNumToInput('-')">-</button>
+                <button onclick="addNumToInput('.')">.</button>
+                <button onclick="clearInput()">Limpiar</button>
+                <button onclick="backspaceInput()">Borrar</button>
+            </div>
+            <button id="corregir" onclick="enviar()">Enviar</button>
+            <button id="cambiar" onclick="cambiarProblema()">Cambiar</button>
+            <span id="t.restante-division">Tiempo: 120 segundos</span>
         </section>
 
         <section id="mjs_correccion">
 
         </section>
-
-        <!-- Elementos para mostrar el tiempo restante -->
-        <div id="tiempos">
-            <span id="t.restante-suma">Tiempo: 120 segundos</span>
-            <span id="t.restante-resta">Tiempo: 120 segundos</span>
-            <span id="t.restante-producto">Tiempo: 120 segundos</span>
-            <span id="t.restante-division">Tiempo: 120 segundos</span>
-        </div>
 
         <!-- Botón para volver al menú -->
         <a href="https://juegos-5to-baco.onrender.com" class="volver-al-menu">Volver al Menú</a>
