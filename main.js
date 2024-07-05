@@ -42,116 +42,100 @@ function iniciarContadores() {
 }
 
 function actualizarTiempoRestante(tipoOperacion, tiempoRestante) {
-  // Actualizar el elemento HTML correspondiente
-  document.getElementById(`t.restante-${tipoOperacion}`).innerHTML = `Tiempo: ${tiempoRestante} segundos`;
+  document.getElementById(`t.restante-${tipoOperacion}`).textContent = `Tiempo: ${tiempoRestante} segundos`;
 }
 
 function btnSumar() {
+  reiniciarContadores();
+  iniciarContadores();
   mjs_correccion.innerHTML = "";
   activarBoton("suma");
   operacion_actual = "+";
   operacion.innerHTML = " + ";
-  
-  if (tiempoRestanteSuma === tiempoMaximo) {
-    iniciarContadores();
-  }
-
   nuevaSuma();
 }
 
-function nuevaSuma() {
-  tiempoRestanteSuma = tiempoMaximo;
-
-  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-
-  num1.innerHTML = n1;
-  num2.innerHTML = n2;
-
-  respuesta_usuario.focus();
-}
-
-function btnProducto() {
-  mjs_correccion.innerHTML = "";
-  activarBoton("producto");
-  operacion_actual = "*";
-  operacion.innerHTML = " x ";
-  
-  if (tiempoRestanteProducto === tiempoMaximo) {
-    iniciarContadores();
-  }
-
-  nuevoProducto();
-}
-
-function nuevoProducto() {
-  tiempoRestanteProducto = tiempoMaximo;
-
-  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-
-  num1.innerHTML = n1;
-  num2.innerHTML = n2;
-
-  respuesta_usuario.focus();
-}
-
 function btnResta() {
+  reiniciarContadores();
+  iniciarContadores();
   mjs_correccion.innerHTML = "";
   activarBoton("resta");
   operacion_actual = "-";
   operacion.innerHTML = " - ";
-  
-  if (tiempoRestanteResta === tiempoMaximo) {
-    iniciarContadores();
-  }
-
   nuevaResta();
 }
 
-function nuevaResta() {
-  tiempoRestanteResta = tiempoMaximo;
-
-  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
-
-  num1.innerHTML = n1;
-  num2.innerHTML = n2;
-
-  respuesta_usuario.focus();
+function btnProducto() {
+  reiniciarContadores();
+  iniciarContadores();
+  mjs_correccion.innerHTML = "";
+  activarBoton("producto");
+  operacion_actual = "*";
+  operacion.innerHTML = " x ";
+  nuevoProducto();
 }
 
 function btnDivision() {
+  reiniciarContadores();
+  iniciarContadores();
   mjs_correccion.innerHTML = "";
   activarBoton("division");
   operacion_actual = "/";
   operacion.innerHTML = " / ";
-  
-  if (tiempoRestanteDivision === tiempoMaximo) {
-    iniciarContadores();
-  }
-
   nuevaDivision();
 }
 
-function nuevaDivision() {
+function reiniciarContadores() {
+  clearInterval(contadorSuma);
+  clearInterval(contadorResta);
+  clearInterval(contadorProducto);
+  clearInterval(contadorDivision);
+  tiempoRestanteSuma = tiempoMaximo;
+  tiempoRestanteResta = tiempoMaximo;
+  tiempoRestanteProducto = tiempoMaximo;
   tiempoRestanteDivision = tiempoMaximo;
-  let divisores = [];
+  actualizarTiempoRestante("suma", tiempoRestanteSuma);
+  actualizarTiempoRestante("resta", tiempoRestanteResta);
+  actualizarTiempoRestante("producto", tiempoRestanteProducto);
+  actualizarTiempoRestante("division", tiempoRestanteDivision);
+}
 
+function nuevaSuma() {
   n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+  respuesta_usuario.focus();
+}
 
+function nuevaResta() {
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+  respuesta_usuario.focus();
+}
+
+function nuevoProducto() {
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  n2 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
+  num1.innerHTML = n1;
+  num2.innerHTML = n2;
+  respuesta_usuario.focus();
+}
+
+function nuevaDivision() {
+  let divisores = [];
+  n1 = parseInt(Math.random() * 1000) + 1;  // Números entre 1 y 1000
   for (let i = 1; i <= n1; i++) {
     if (n1 % i === 0) {
       divisores.push(i);
     }
   }
-
   let pos = parseInt(Math.random() * divisores.length);
   n2 = divisores[pos];
-
   num1.innerHTML = n1;
   num2.innerHTML = n2;
-
   respuesta_usuario.focus();
 }
 
@@ -159,14 +143,10 @@ function enviar() {
   if (respuesta_usuario.value == "") {
     return;
   }
-
   let solucion;
   let operacionStr = n1 + operacion_actual + n2;
   solucion = eval(operacionStr);
-
   let i = document.createElement("i");
-
-  // Revisar si la respuesta es numérica o contiene el signo negativo o punto
   let respuestaUsuario = respuesta_usuario.value.trim();
   if (!isNaN(respuestaUsuario) || respuestaUsuario === '-' || respuestaUsuario === '.') {
     if (parseFloat(respuestaUsuario) === solucion) {
@@ -177,19 +157,15 @@ function enviar() {
       mjs_correccion.appendChild(i);
     }
   } else {
-    // Respuesta no válida
     i.className = "fa-regular fa-face-frown";
     mjs_correccion.appendChild(i);
   }
-
-  // Cambiar automáticamente el problema
   cambiarProblema();
   respuesta_usuario.value = "";
 }
 
 function cambiarProblema() {
   respuesta_usuario.value = "";
-
   if (operacion_actual == "+") {
     nuevaSuma();
   } else if (operacion_actual == "-") {
@@ -230,5 +206,5 @@ function activarBoton(idBoton) {
 
 // Llamar a la función para iniciar los contadores al cargar la página
 window.onload = function() {
-  iniciarContadores();
+  reiniciarContadores();
 }
